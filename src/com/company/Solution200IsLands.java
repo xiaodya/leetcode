@@ -13,18 +13,24 @@ public class Solution200IsLands {
             this.j = j;
         }
     }
-    public int dfs_count = 0;
+    private int dfs_count = 0;
+    private int[] dx = {-1,1,0,0};
+    private int[] dy = {0,0,-1,1};
+    private int max_x,max_y = 0;
+
     private Queue<Grid> queue = new LinkedList<>();
     private HashSet<Grid> set = new HashSet<>();
     public int numIslands(char[][] grid) {
+        this.max_x = grid.length;
+        this.max_y = grid[0].length;
         int count = 0;
-        for (int i = 0; i<grid.length; i++){
-            for (int j = 0; j<grid[0].length; j++){
+        for (int i = 0; i<this.max_x; i++){
+            for (int j = 0; j<this.max_y; j++){
                 if (grid[i][j] == '1'){
-                    count++;
 //                    dfs(i,j,grid);
                     this.queue.offer(new Grid(i,j));
                     bfs(this.queue,grid);
+                    count++;
                 }
             }
         }
@@ -34,27 +40,37 @@ public class Solution200IsLands {
     private void bfs(Queue<Grid> queue, char[][] grid) {
         while (this.queue.size() > 0){
             this.dfs_count++;
-            Grid grid1  = queue.poll();
+            Grid grid1 = queue.poll();
             grid[grid1.i][grid1.j] = '0';
-            if (grid1.i<grid.length-1 && grid[grid1.i+1][grid1.j] == '1') queue.offer(new Grid(grid1.i+1,grid1.j));
-            if (grid1.i>0 && grid[grid1.i-1][grid1.j] == '1') queue.offer(new Grid(grid1.i-1,grid1.j));
-            if (grid1.j<grid[0].length-1 && grid[grid1.i][grid1.j+1] == '1') queue.offer(new Grid(grid1.i,grid1.j+1));
-            if (grid1.j>0 && grid[grid1.i][grid1.j-1]=='1') queue.offer(new Grid(grid1.i,grid1.j-1));
+            for (int i=0;i<4;i++){
+                int x = grid1.i+dx[i];
+                int y = grid1.j+dy[i];
+                if (x < 0 || x >= max_x || y < 0 || y >= max_y || grid[x][y] == '0'){
+                    continue;
+                }else{
+                    queue.offer(new Grid(grid1.i+dx[i],grid1.j+dy[i]));
+                }
+            }
         }
     }
 
     private void dfs(int i, int j, char[][] grid) {
         this.dfs_count++;
         grid[i][j] = '0';
-        if (i<grid.length-1 && grid[i+1][j] == '1') dfs(i+1,j,grid);
-        if (i>0 && grid[i-1][j] == '1') dfs(i-1,j,grid);
-        if (j<grid[0].length-1 && grid[i][j+1] == '1') dfs(i,j+1,grid);
-        if (j>0 && grid[i][j-1]=='1') dfs(i,j-1,grid);
+        for (int k=0;k<4;k++){
+            int x = i+dx[k];
+            int y = j+dy[k];
+            if (x < 0 || x >= max_x || y < 0 || y >= max_y || grid[x][y] == '0'){
+                continue;
+            }else{
+                dfs(x,y,grid);
+            }
+        }
     }
 
 
     public static void main(String args[]){
-        char[][] grid = new char[][]{{'1','1','1','1','0'},{'1','1','0','1','0'},{'1','1','0','0','0'},{'0','0','0','0','0'}};
+        char[][] grid = new char[][]{{'1','1','1','0','0'},{'1','1','0','1','0'},{'1','1','0','0','0'},{'0','0','0','0','1'}};
         Solution200IsLands solution200IsLands = new Solution200IsLands();
         System.out.println("count="+solution200IsLands.numIslands(grid));
         System.out.println("dfs_count="+solution200IsLands.dfs_count);

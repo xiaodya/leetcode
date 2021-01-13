@@ -81,5 +81,8 @@ public class BitsSolution {
 
         System.out.println(Arrays.toString(bit.countBits(100)));
         System.out.println(Arrays.toString(bit.countBits2(100)));
+
+        System.out.println(100000 % 3);
+        System.out.println(3 & 100000);
     }
 }

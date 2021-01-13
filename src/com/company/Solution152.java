@@ -2,7 +2,8 @@ package com.company;
 
 import com.sun.javaws.IconUtil;
 
-//152. Maximum Product Subarray
+//152. Maximum Product Subarray 乘积最大子序列
+
 public class Solution152 {
     //暴力破解
     public int maxProduct(int[] nums) {
@@ -59,7 +60,7 @@ public class Solution152 {
 
     public static void main(String args[]){
         Solution152 solution = new Solution152();
-//        System.out.println(solution.maxProduct(new int[]{2,-5,-2,-4,3}));
+        System.out.println(solution.maxProduct(new int[]{2,-5,-2,-4,3}));
         System.out.println(solution.maxProductRecursion(new int[]{2,-5,-2,-4,3}));
     }
 }

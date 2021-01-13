@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-//leetcode 120
+//leetcode 120 三角形最小路径和
 public class Triangle {
     public int minimumTotal(List<List<Integer>> triangle) {
         for (int i = 1;i<triangle.size();i++){
@@ -109,13 +109,13 @@ public class Triangle {
 
     public static void main(String args[]){
         Triangle triangle = new Triangle();
-        int[][] a = new int[][]{{2},{3,4},{6,5,7},{4,1,8,3}};
+        int[][] a = new int[][]{{2},{3,100},{6,5,7},{1000,10000,8,3}};
         List<List<Integer>> l = new ArrayList<>();
         for (int i=0;i<a.length;i++){
             l.add(Arrays.stream(a[i]).boxed().collect(Collectors.toList()));
         }
-//        System.out.println(triangle.minimumTotal(l));
-//        System.out.println(triangle.minimumTotalDp(l));
+        System.out.println(triangle.minimumTotal(l));
+        System.out.println(triangle.minimumTotalDp(l));
         System.out.println(triangle.minimumTotalRecursion(l));
     }
 }

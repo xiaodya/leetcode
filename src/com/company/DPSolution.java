@@ -27,10 +27,28 @@ public class DPSolution {
         }
         return fib[n-1];
     }
+
+    public int fib(int n){
+        if (n <= 1) return n;
+        int fib[] = new int[n];
+        fib[0] = 1;
+        fib[1] = 1;
+        for (int i=2;i<n;i++){
+            fib[i] = fib[i-1]+fib[i-2];
+        }
+        return fib[n-1];
+    }
+
+    public int fib_recusion(int n){
+        if (n <= 1) return n;
+        return fib_recusion(n-1)+fib_recusion(n-2);
+    }
     
     public static void main(String args[]){
         DPSolution dp = new DPSolution();
         System.out.println(dp.climbStairs(9));
-        System.out.println(dp.climbStairs2(4));
+        System.out.println(dp.climbStairs2(9));
+        System.out.println(dp.fib(10));
+        System.out.println(dp.fib_recusion(10));
     }
 }
