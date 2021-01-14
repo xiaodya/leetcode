@@ -105,6 +105,42 @@ public class SubMissionProblem {
         }
     }
 
+    public void solution_sort(HashMap<String,List<String>> subMission){
+        //如果任务有大小关系，O(1)*logN的复杂度
+        List<String> list = new ArrayList<String>(subMission.keySet());
+        Collections.sort(list, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                // 返回相反的compare
+                return o2.compareTo(o1);
+            }
+        });
+        System.out.println();
+        System.out.println(list.toString());
+    }
+
+    public void solution_dfs(HashMap<String,List<String>> subMission){
+        //存下来已经搜索过的前序节点
+        HashMap<String,HashMap<String,String>> invited = new HashMap<String,HashMap<String,String>>();
+        for (Map.Entry<String, List<String>> outer : subMission.entrySet()) {
+
+        }
+    }
+
+    public String dfs_tail(HashMap<String,List<String>> subMission, HashMap<String,HashMap<String,String>> invited, String tail, List<String> subList, int k){
+        //terminator
+        if (k>subList.size()) return tail;
+        if (!subMission.containsKey(tail)){
+            return tail;
+        }
+        //process
+        String sub = subList.get(k);
+        //drill down
+
+        //reverse status
+        return null;
+    }
+
     public static void main(String args[]){
         SubMissionProblem subMissionProblem = new SubMissionProblem();
         HashMap<String, List<String>> subMission = new HashMap<>();
@@ -118,6 +154,7 @@ public class SubMissionProblem {
         subMission.put("Y",new ArrayList<String>(Arrays.asList("A")));
         subMission.put("W",new ArrayList<String>(Arrays.asList("Y")));
         subMissionProblem.solution(subMission);
+        subMissionProblem.solution_sort(subMission);
 
     }
 }
