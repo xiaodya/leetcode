@@ -22,6 +22,9 @@ import java.util.*;
  * // 如使用上述例子作为输入时，相应函数返回结果应为ABC。s
  */
 public class SubMissionProblem {
+    public int dfscount = 0;
+    public int dpcount = 0;
+
     class Node {
         String key;
         String value;
@@ -73,10 +76,12 @@ public class SubMissionProblem {
             solution_tail(subMission, first.getKey());
         }
         Node node = head;
+        System.out.print("find one way solution:");
         while (null != node.next) {
             System.out.print(node.key);
             node = node.next;
         }
+        System.out.println();
     }
 
     public void solution_head(HashMap<String, List<String>> subMission, String head) {
@@ -124,67 +129,124 @@ public class SubMissionProblem {
     public void solution_dfs(HashMap<String, List<String>> subMission) {
         if (subMission.size() > 0) {
             //存下来已经搜索过的前序节点
-            HashMap<String, List<String>> invited = new HashMap<String, List<String>>();
+            HashSet<String> filter = new HashSet<String>();
             HashMap<String, List<String>> result = new HashMap<String, List<String>>();
             for (Map.Entry<String, List<String>> outer : subMission.entrySet()) {
-                dfs_tail(subMission, outer.getKey(), outer.getValue(), 0);
-                if (!invited.containsKey(outer.getKey())) {
-                    dp(subMission, result, invited, outer.getKey(), outer.getKey(), outer.getValue(), 0);
+                if (!filter.contains(outer.getKey())) {
+                    dfs(subMission, result, filter, outer.getKey(), outer.getKey(), outer.getValue(), 0);
                 }
-                System.out.println();
             }
-            System.out.println(invited.toString());
-            System.out.println(result.toString());
+//            System.out.println(filter.toString());
+            System.out.println("find all way solution by dfs:" + result.toString());
+            System.out.println("find all way solution by dfs count:" + dfscount);
         }
     }
 
-    public String dfs_tail(HashMap<String, List<String>> subMission, String head, List<String> subList, int k) {
-        //terminator
-
-        if (k >= subList.size()) return head;
-        //process
-        String sub = subList.get(k);
-        //drill down
-        if (subMission.containsKey(sub)) {
-            List<String> nextSubList = subMission.get(sub);
-            dfs_tail(subMission, head + sub, nextSubList, 0);
-        } else {
-            System.out.println(head + sub);
-        }
-        dfs_tail(subMission, head, subList, k + 1);
-
-        //reverse status
-        return head + sub;
-    }
-
-    public String dp(HashMap<String, List<String>> subMission, HashMap<String, List<String>> result,
-                     HashMap<String, List<String>> invited, String baba, String head, List<String> subList, int k) {
+    public String dfs(HashMap<String, List<String>> subMission, HashMap<String, List<String>> result,
+                      HashSet<String> filter, String baba, String head, List<String> subList, int k) {
+        dfscount++;
         //terminator
         if (k >= subList.size()) return head;
         //process
         String sub = subList.get(k);
-        if (invited.containsKey(sub)){
+        filter.add(sub);
+        if (result.containsKey(sub)) {
             result.remove(sub);
         }
         //drill down
         if (subMission.containsKey(sub)) {
             List<String> nextSubList = subMission.get(sub);
-            dp(subMission, result, invited, baba, head+sub, nextSubList, 0);
+            dfs(subMission, result, filter, baba, head + sub, nextSubList, 0);
+        } else {
+            if (result.containsKey(baba)) {
+                List<String> ori = result.get(baba);
+                ori.add(head + sub);
+                result.put(baba, ori);
+            } else {
+                List<String> l = new ArrayList<String>();
+                l.add(head + sub);
+                result.put(baba, l);
+            }
+        }
+        dfs(subMission, result, filter, baba, head, subList, k + 1);
+        //reverse status
+        return head + sub;
+    }
 
+    public void solution_dp(HashMap<String, List<String>> subMission) {
+        if (subMission.size() > 0) {
+            //存下来已经搜索过的前序节点
+            //dp 层层递推，每一层记录当前最优子结构的解，遇到前序节点直接使用，减少重复计算，缺点是多用内存。
+            HashSet<String> filter = new HashSet<String>();
+            HashMap<String, List<String>> invited = new HashMap<String, List<String>>();
+            HashMap<String, List<String>> result = new HashMap<String, List<String>>();
+            for (Map.Entry<String, List<String>> outer : subMission.entrySet()) {
+                String head = outer.getKey();
+                List<String> headSubList = outer.getValue();
+                List<String> noinvited = new ArrayList<>();
+                List<String> newHeadList = new ArrayList<>();
+                for (String sub: headSubList){
+                    filter.add(sub);
+                    if (result.containsKey(sub)){
+                        result.remove(sub);
+                    }
+                    if (invited.containsKey(sub)){
+                        List<String> subList = invited.get(sub);
+                        for (String subStr: subList){
+                            newHeadList.add(head+subStr);
+                        }
+                    } else {
+                        noinvited.add(sub);
+                    }
+                }
+                invited.put(head,newHeadList);
+                if (!filter.contains(head)){
+                    result.put(head,newHeadList);
+                }
+                if (noinvited.size() > 0){
+                    dp(subMission, filter, result, invited, head, head, noinvited, 0);
+                }
+            }
+//            System.out.println(filter.toString());
+//            System.out.println(invited.toString());
+            System.out.println("find all way solution by dp:" + result.toString());
+            System.out.println("find all way solution by dp count:" + dpcount);
+        }
+    }
+
+    public String dp(HashMap<String, List<String>> subMission, HashSet<String> filter, HashMap<String, List<String>> result,
+                     HashMap<String, List<String>> invited, String baba, String head, List<String> subList, int k) {
+        dpcount++;
+        //terminator
+        if (k >= subList.size()) return head;
+        //process
+        String sub = subList.get(k);
+        filter.add(sub);
+        if (result.containsKey(sub)) {
+            result.remove(sub);
+        }
+        //drill down
+        if (subMission.containsKey(sub)) {
+            List<String> nextSubList = subMission.get(sub);
+            dp(subMission, filter, result, invited, baba, head + sub, nextSubList, 0);
         } else {
             if (invited.containsKey(baba)) {
                 List<String> ori = invited.get(baba);
                 ori.add(head + sub);
                 invited.put(baba, ori);
-                result.put(baba, ori);
+                if (!filter.contains(baba)){
+                    result.put(baba, ori);
+                }
             } else {
                 List<String> l = new ArrayList<String>();
                 l.add(head + sub);
                 invited.put(baba, l);
-                result.put(baba, l);
+                if (!filter.contains(baba)){
+                    result.put(baba, l);
+                }
             }
         }
-        dp(subMission, result, invited, baba, head, subList, k + 1);
+        dp(subMission, filter, result, invited, baba, head, subList, k + 1);
 
         //reverse status
 
@@ -202,11 +264,10 @@ public class SubMissionProblem {
         subMission.put("Z", new ArrayList<String>(Arrays.asList("X")));
         subMission.put("D", new ArrayList<String>(Arrays.asList("C")));
         subMission.put("Y", new ArrayList<String>(Arrays.asList("A")));
-        subMission.put("W", new ArrayList<String>(Arrays.asList("Y")));
+        subMission.put("W", new ArrayList<String>(Arrays.asList("Y","B")));
         subMissionProblem.solution(subMission);
-        subMissionProblem.solution_sort(subMission);
-
         subMissionProblem.solution_dfs(subMission);
+        subMissionProblem.solution_dp(subMission);
 
     }
 }
