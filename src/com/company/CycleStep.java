@@ -38,7 +38,7 @@ public class CycleStep {
         //reverse status
     }
 
-    public void solution_db(int start, int end){
+    public void solution_dp(int start, int end){
         int allnode = end-start+1;
         int[] stepn = new int[allnode];
         stepn[start] = 1;
@@ -54,6 +54,6 @@ public class CycleStep {
     public static void main(String args[]){
         CycleStep cycleStep = new CycleStep();
         cycleStep.solution_dfs(0,4);
-        cycleStep.solution_db(0,4);
+        cycleStep.solution_dp(0,10);
     }
 }
