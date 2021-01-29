@@ -1,6 +1,9 @@
 package com.company;
 
+import apple.laf.JRSUIUtils;
+
 import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * @Author: xiaodya
@@ -84,6 +87,27 @@ public class DeepLengthWithTree {
         return depth;
     }
 
+    public int solution_dfs(TreeNode root){
+        if (root == null) return 0;
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        int depth = 0;
+        int maxdepth = 0;
+        while (!stack.isEmpty() || root != null){
+            while (root != null){
+                stack.push(root);
+                depth++;
+                if (depth>=maxdepth){
+                    maxdepth = depth;
+                }
+                root =  root.left;
+            }
+            root = stack.pop();
+            root = root.right;
+            if (root == null) depth--;
+        }
+        return maxdepth;
+    }
+
     public static void main(String args[]) {
         DeepLengthWithTree deepLengthWithTree = new DeepLengthWithTree();
         System.out.println("Min:"+deepLengthWithTree.minDepth(deepLengthWithTree.treeNode1));
@@ -97,10 +121,13 @@ public class DeepLengthWithTree {
         System.out.println("BFSMax.Left:"+deepLengthWithTree.solution_bfs(deepLengthWithTree.treeNode1.left));
         System.out.println("BFSMax.Right:"+deepLengthWithTree.solution_bfs(deepLengthWithTree.treeNode1.right));
 
+        System.out.println("DFSMax:"+deepLengthWithTree.solution_dfs(deepLengthWithTree.treeNode1));
+        System.out.println("DFSMax.Left:"+deepLengthWithTree.solution_dfs(deepLengthWithTree.treeNode1.left));
+        System.out.println("DFSMax.Right:"+deepLengthWithTree.solution_dfs(deepLengthWithTree.treeNode1.right));
+
         int maxleft = deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.left);
         int maxright = deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.right);
         System.out.println("path="+(maxleft+maxright+1));
-
 
     }
 }
