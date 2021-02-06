@@ -2,6 +2,9 @@ package com.company;
 
 import java.util.Stack;
 
+/**
+ * 1.1.3 给定一个二叉搜索树(BST)，找到树中第 K 小的节点
+ */
 public class Solution230kthSmallestInBST {
     public class TreeNode {
         int val;
