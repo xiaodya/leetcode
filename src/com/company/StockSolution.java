@@ -51,7 +51,7 @@ public class StockSolution {
             if (i==0){
                 profit[i][0] = 0;           //状态位，0没有股票
                 profit[i][1] = -prices[i];  //1手里有股票
-                profit[i][2] = 0;           //1手里有股票
+                profit[i][2] = 0;           //2手里有股票,卖掉
             }else{
                 profit[i][0] = profit[i-1][0];
                 profit[i][1] = Math.max(profit[i-1][1],profit[i-1][0]-prices[i]);
@@ -103,7 +103,26 @@ public class StockSolution {
      * @return
      */
     public int maxProfitK(int k, int[] prices){
-        return 0;
+        if (prices == null || prices.length == 0)
+            return 0;
+        int[][][] profit = new int[prices.length][k+1][2];
+        //初始化第一天的price
+        for (int kk=0;kk<=k;kk++){
+            profit[0][kk][0] = 0;
+            profit[0][kk][1] = -prices[0];
+        }
+        for (int i=1;i<prices.length;i++){
+            for (int j=0;j<=k;j++){
+                profit[i][j][0] = j != 0 ? Math.max(profit[i-1][j-1][1] + prices[i],profit[i-1][j][0]) : profit[i-1][j][0];
+                profit[i][j][1] = Math.max(profit[i-1][j][1],profit[i-1][j][0] - prices[i]);
+            }
+        }
+        int maxProfit = Integer.MIN_VALUE;
+        for (int i=0;i<=k;i++){
+            System.out.println(profit[prices.length-1][i][0]);
+            maxProfit = Math.max(maxProfit,profit[prices.length-1][i][0]);
+        }
+        return maxProfit;
     }
 
     public static void main(String args[]){
@@ -122,6 +141,9 @@ public class StockSolution {
         System.out.println("oneDp="+oneDp);
         System.out.println("unLimitDp="+unLimitDp);
         System.out.println("unLimitGreedy="+unLimitGreedy);
+
+        int maxProfitK = stockSolution.maxProfitK(3,prices);
+        System.out.println("maxProfitK="+maxProfitK);
 
     }
 }
