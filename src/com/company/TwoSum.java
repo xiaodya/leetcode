@@ -1,6 +1,5 @@
 package com.company;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 import java.util.stream.Collectors;
 

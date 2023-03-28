@@ -19,7 +19,8 @@ public class ReverseLinkedList {
     public static void main(String[] args) {
         // write your code here
 //        System.out.println(reverse(node1).val);
-        System.out.println(recursionReverse(node1,null).val);
+//        System.out.println(recursionReverse(node1,null).val);
+        System.out.println(reverseMn(node1,2,4).val);
     }
     //leetcode 206
     public static ListNode reverse(ListNode head){
@@ -48,6 +49,25 @@ public class ReverseLinkedList {
         System.out.println(head.val);
         if (prev.next == null) System.out.println(prev.val);
         return tail;
+    }
+
+    //牛客网，链表内区域反转
+    public static ListNode reverseMn(ListNode head, int m, int n) {
+        ListNode start = new ListNode(0);
+        start.next = head;
+        ListNode prev = start;
+        ListNode cur = head;
+        for (int i=1; i<m; i++) {
+            prev = cur;
+            cur = cur.next;
+        }
+        for (int i=m; i<n; i++){
+            ListNode temp = cur.next;
+            cur.next = temp.next;
+            temp.next = prev.next;
+            prev.next = temp;
+        }
+        return start.next;
     }
 
     //leetcode 24
