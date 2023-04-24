@@ -15,10 +15,36 @@ public class TwoSum {
 
         int [] threeNums = new int[]{0,2,2,3,0,1,2,3,-1,-4,2};
 //        int [] threeNums = new int[]{-1,0,1,2,-1,-4};
-        threeSum(threeNums);
-        threeSumHeadTail(threeNums);
-        threeSumUsingMap(threeNums);
-        threeSumUsingTwoSum(threeNums);
+//        threeSum(threeNums);
+//        threeSumHeadTail(threeNums);
+//        threeSumUsingMap(threeNums);
+//        threeSumUsingTwoSum(threeNums);
+        minNumberDisappeared(new int[]{4,3,2,1});
+    }
+
+    public static int majority(int[] array) {
+        Arrays.sort(array);
+        return 0;
+    }
+
+    public static int minNumberDisappeared (int[] nums) {
+        // write code here
+        for(int i=0;i<nums.length;i++){
+            if(nums[i] <= 0) {
+                nums[i] = nums.length+1;
+            }
+        }
+        for(int i=0;i<nums.length;i++){
+            if(Math.abs(nums[i]) <= nums.length) {
+                nums[Math.abs(nums[i])-1] = -1 * Math.abs(nums[Math.abs(nums[i])-1]);
+            }
+        }
+        for(int i=0;i<nums.length;i++){
+            if(nums[i] > 0){
+                return i+1;
+            }
+        }
+        return nums.length+1;
     }
 
     public static int[] twosum(int[] nums, int target){

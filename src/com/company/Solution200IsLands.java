@@ -27,9 +27,9 @@ public class Solution200IsLands {
         for (int i = 0; i<this.max_x; i++){
             for (int j = 0; j<this.max_y; j++){
                 if (grid[i][j] == '1'){
-//                    dfs(i,j,grid);
-                    this.queue.offer(new Grid(i,j));
-                    bfs(this.queue,grid);
+                    dfs(i,j,grid);
+//                    this.queue.offer(new Grid(i,j));
+//                    bfs(this.queue,grid);
                     count++;
                 }
             }

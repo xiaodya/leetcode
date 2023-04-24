@@ -20,9 +20,9 @@ public class Main {
 
         System.out.println("param_2="+param_2+";param_3="+param_3+";param_4="+param_4);
         int[] windows = new int[]{3, 6, 1, 2, -1, -4};
-        maxSlidingWindowUsingArray2(windows,3);
-        System.out.println(myPowRecursion(2,11)+"===="+myPowLoop(2,7));
-        System.out.println(myPowLoop(2,11));
+//        maxSlidingWindowUsingArray2(windows,3);
+//        System.out.println(myPowRecursion(2,11)+"===="+myPowLoop(2,7));
+        System.out.println(myPowLoop(2,5));
     }
 
     //leetcode 239

@@ -42,16 +42,28 @@ public class Triangle {
 
     public int minimumTotalRecursion(List<List<Integer>> triangle) {
         if (triangle == null || triangle.size() == 0) return 0;
-        int ret = dfs(triangle, 0, 0);
+        int ret = dfs(triangle, 0, 0,"");
         System.out.println("count3=" + count3);
         return ret;
     }
 
 
-    public int dfs(List<List<Integer>> triangle, int i, int j) {
+    public int dfs(List<List<Integer>> triangle, int i, int j, String s) {
         count3++;
-        if (i + 1 >= triangle.size()) return triangle.get(i).get(j);
-        return triangle.get(i).get(j) + Math.min(dfs(triangle, i + 1, j), dfs(triangle, i + 1, j + 1));
+        //terminator;
+        if (i >= triangle.size()) {
+            return 0;
+        }
+        //process;
+        s += "-->" + triangle.get(i).get(j);
+        System.out.println(s);
+        //drill down
+        int left = dfs(triangle,i+1,j,s);
+        int right = dfs(triangle,i+1,j+1,s);
+        System.out.println("left="+left+";right="+right);
+        return triangle.get(i).get(j) + Math.min(left,right);
+//        return triangle.get(i).get(j) + Math.min(dfs(triangle,i+1,j,s),dfs(triangle,i+1,j+1,s));
+        //refresh state;
     }
 
     //Top down
@@ -127,8 +139,8 @@ public class Triangle {
         List<List<Integer>> l = Arrays.asList(
                 Arrays.asList(    2),
                 Arrays.asList(  3, 4),
-                Arrays.asList( 5, 6, 7),
-                Arrays.asList(7, 8, 9, 10)
+                Arrays.asList( 50, 6, 7),
+                Arrays.asList(7, 80, 90, 10)
         );
 //        System.out.println(triangle.minimumTotal(l));
 //        System.out.println(triangle.minimumTotalDp(l));

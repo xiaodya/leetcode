@@ -37,17 +37,17 @@ public class DeepLengthWithTree {
     TreeNode treeNode13 = new TreeNode(13);
     {
         treeNode1.left = treeNode2;
-        treeNode1.right = treeNode3;
-        treeNode2.right = treeNode4;
-        treeNode3.left = treeNode5;
-        treeNode4.left = treeNode6;
-        treeNode6.right = treeNode7;
-        treeNode7.right = treeNode8;
-        treeNode8.left = treeNode9;
-        treeNode9.left = treeNode10;
-        treeNode5.right = treeNode11;
-        treeNode5.left = treeNode12;
-        treeNode12.left = treeNode13;
+//        treeNode1.right = treeNode3;
+//        treeNode2.right = treeNode4;
+//        treeNode3.left = treeNode5;
+//        treeNode4.left = treeNode6;
+//        treeNode6.right = treeNode7;
+//        treeNode7.right = treeNode8;
+//        treeNode8.left = treeNode9;
+//        treeNode9.left = treeNode10;
+//        treeNode5.right = treeNode11;
+//        treeNode5.left = treeNode12;
+//        treeNode12.left = treeNode13;
     }
     //递归，分治
     public int minDepth(TreeNode treeNode){
@@ -109,23 +109,23 @@ public class DeepLengthWithTree {
     public static void main(String args[]) {
         DeepLengthWithTree deepLengthWithTree = new DeepLengthWithTree();
         System.out.println("Min:"+deepLengthWithTree.minDepth(deepLengthWithTree.treeNode1));
-        System.out.println("MinLeft:"+deepLengthWithTree.minDepth(deepLengthWithTree.treeNode1.left));
-        System.out.println("MinRight:"+deepLengthWithTree.minDepth(deepLengthWithTree.treeNode1.right));
+//        System.out.println("MinLeft:"+deepLengthWithTree.minDepth(deepLengthWithTree.treeNode1.left));
+//        System.out.println("MinRight:"+deepLengthWithTree.minDepth(deepLengthWithTree.treeNode1.right));
         System.out.println("Max:"+deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1));
-        System.out.println("MaxLeft:"+deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.left));
-        System.out.println("MaxRight:"+deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.right));
-
-        System.out.println("BFSMax:"+deepLengthWithTree.solution_bfs(deepLengthWithTree.treeNode1));
-        System.out.println("BFSMax.Left:"+deepLengthWithTree.solution_bfs(deepLengthWithTree.treeNode1.left));
-        System.out.println("BFSMax.Right:"+deepLengthWithTree.solution_bfs(deepLengthWithTree.treeNode1.right));
-
-        System.out.println("DFSMax:"+deepLengthWithTree.solution_dfs(deepLengthWithTree.treeNode1));
-        System.out.println("DFSMax.Left:"+deepLengthWithTree.solution_dfs(deepLengthWithTree.treeNode1.left));
-        System.out.println("DFSMax.Right:"+deepLengthWithTree.solution_dfs(deepLengthWithTree.treeNode1.right));
-
-        int maxleft = deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.left);
-        int maxright = deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.right);
-        System.out.println("path="+(maxleft+maxright+1));
+//        System.out.println("MaxLeft:"+deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.left));
+//        System.out.println("MaxRight:"+deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.right));
+//
+//        System.out.println("BFSMax:"+deepLengthWithTree.solution_bfs(deepLengthWithTree.treeNode1));
+//        System.out.println("BFSMax.Left:"+deepLengthWithTree.solution_bfs(deepLengthWithTree.treeNode1.left));
+//        System.out.println("BFSMax.Right:"+deepLengthWithTree.solution_bfs(deepLengthWithTree.treeNode1.right));
+//
+//        System.out.println("DFSMax:"+deepLengthWithTree.solution_dfs(deepLengthWithTree.treeNode1));
+//        System.out.println("DFSMax.Left:"+deepLengthWithTree.solution_dfs(deepLengthWithTree.treeNode1.left));
+//        System.out.println("DFSMax.Right:"+deepLengthWithTree.solution_dfs(deepLengthWithTree.treeNode1.right));
+//
+//        int maxleft = deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.left);
+//        int maxright = deepLengthWithTree.maxDepth(deepLengthWithTree.treeNode1.right);
+//        System.out.println("path="+(maxleft+maxright+1));
 
     }
 }
