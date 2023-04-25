@@ -10,17 +10,32 @@ class ListNode {
 }
 
 public class ReverseLinkedList {
-    public static ListNode node5 = new ListNode(5);
-    public static ListNode node4 = new ListNode(4,node5);
-    public static ListNode node3 = new ListNode(3,node4);
-    public static ListNode node2 = new ListNode(2,node3);
-    public static ListNode node1 = new ListNode(1,node2);
+    public static ListNode node10 = new ListNode(10,null);
+    public static ListNode node9 = new ListNode(9,node10);
+    public static ListNode node8 = new ListNode(8,node9);
+    public static ListNode node7 = new ListNode(7,node8);
+    public static ListNode node6 = new ListNode(6,node7);
+    public static ListNode node5 = new ListNode(5,null);
+    public static ListNode node4 = new ListNode(4,node6);
+    public static ListNode node3 = new ListNode(3,node5);
+    public static ListNode node2 = new ListNode(2,node4);
+    public static ListNode node1 = new ListNode(1,node3);
 
     public static void main(String[] args) {
         // write your code here
 //        System.out.println(reverse(node1).val);
 //        System.out.println(recursionReverse(node1,null).val);
-        System.out.println(reverseMN(node1,1,2));
+        ListNode cur = reverseKG(node1,2);
+        while (cur != null){
+            System.out.print(cur.val+"=>");
+            cur = cur.next;
+        }
+        System.out.println();
+        ListNode cur2 = Merge(node1,node2);
+        while (cur2 != null){
+            System.out.print(cur2.val+"=>");
+            cur2 = cur2.next;
+        }
     }
     //leetcode 206
     public static ListNode reverse(ListNode head){
@@ -37,23 +52,20 @@ public class ReverseLinkedList {
     }
 
     public static ListNode reverseMN(ListNode head, int m, int n){
-        ListNode cur = head;
-        ListNode prev = null;
-        ListNode temp = null;
-        int index = 1;
-        while (cur != null){
-            if (index >= m && index <= n) {
-                temp = cur.next;
-                cur.next = prev;
-                prev = cur;
-                cur = temp;
-            } else {
-                cur = cur.next;
-                prev = cur;
-            }
-            index++;
+        ListNode start = new ListNode(0);
+        start.next = head;
+        ListNode prev = start;
+        for (int i=0; i<m-1; i++) {
+            prev = prev.next;
         }
-        return head;
+        ListNode cur = prev.next;
+        for (int i=0; i<n-m; i++) {
+            ListNode temp = cur.next;
+            cur.next = temp.next;
+            temp.next = prev.next;
+            prev.next = temp;
+        }
+        return start.next;
     }
 
     public static ListNode recursionReverse(ListNode head,ListNode prev){
@@ -90,7 +102,63 @@ public class ReverseLinkedList {
         return prev.next;
     }
 
-    public ListNode reverseKGroup(ListNode head, int k) {
+    public static ListNode Merge(ListNode list1, ListNode list2) {
+        ListNode result = new ListNode(0);
+        ListNode cur = result;
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+        while (list1 != null || list2 != null) {
+            if (list1 == null && list2 != null) {
+                cur.next = list2;
+                list2 = list2.next;
+            }
+            if (list2 == null && list1 != null) {
+                cur.next = list1;
+                list1 = list1.next;
+            }
+            if (list1.val <= list2.val) {
+                cur.next = list1;
+                list1 = list1.next;
+            } else {
+                cur.next = list2;
+                list2 = list2.next;
+            }
+            cur = cur.next;
+        }
+        return result.next;
+    }
+
+    public static ListNode reverseKG(ListNode head, int k){
+        //找到每次翻转的尾部
+        ListNode tail = head;
+        //遍历k次到尾部
+        for(int i = 0; i < k; i++){
+            //如果不足k到了链表尾，直接返回，不翻转
+            if(tail == null)
+                return head;
+            tail = tail.next;
+        }
+        //翻转时需要的前序和当前节点
+        ListNode pre = null;
+        ListNode cur = head;
+        //在到达当前段尾节点前
+        while(cur != tail){
+            //翻转
+            ListNode temp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = temp;
+        }
+        //当前尾指向下一段要翻转的链表
+        head.next = reverseKG(tail, k);
+        return pre;
+    }
+
+    public static ListNode reverseKGroup(ListNode head, int k) {
         ListNode prev=new ListNode(0);
         prev.next=head;
         int i=1;
@@ -101,7 +169,6 @@ public class ReverseLinkedList {
         ListNode tmp=null;
 
         while(cur!=null ){
-
             subListHead=cur;
             subListTile=cur;
             while(i < k &&cur.next!=null){
@@ -109,7 +176,6 @@ public class ReverseLinkedList {
                 i++;
             }
             loop++;
-
             tmp= cur.next;
             cur.next=null;
             //将子链表反转过来
@@ -129,7 +195,7 @@ public class ReverseLinkedList {
 
     }
 
-    public ListNode reverseK(ListNode head){
+    public static ListNode reverseK(ListNode head){
         ListNode cur=head ;
         ListNode pre=null;
         while(cur !=null){
